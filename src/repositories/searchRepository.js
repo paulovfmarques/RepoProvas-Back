@@ -46,4 +46,18 @@ async function fetchSubjects() {
     return {subjectsPerTerm, examsPerSubject, examsPerCategory}
 }
 
-module.exports = { fetchStoredParams, fetchSubjects };
+async function fetchSubjetcsPerTerm(id) {
+    
+    const resp = await db.query(`
+        SELECT subjects.name, COUNT(exams.subject_id)
+        FROM subjects JOIN exams
+        ON subjects.id=exams.subject_id AND exams.category_id=$1
+        GROUP BY subjects.name
+        ORDER BY subjects.name ASC
+    `,[id]);
+    const subjectsPerTerm = resp.rows
+
+    return subjectsPerTerm
+}
+
+module.exports = { fetchStoredParams, fetchSubjects, fetchSubjetcsPerTerm };
