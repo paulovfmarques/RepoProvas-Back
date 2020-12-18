@@ -12,4 +12,13 @@ router.get("/database-info", async (req, res) => {
     }    
 });
 
+router.get("/subjects", async (req, res) => {    
+    try{
+        const info = await searchRepository.fetchSubjects();
+        res.status(200).send(info);
+    }catch(err){
+        res.sendStatus(err)
+    }    
+});
+
 module.exports = router;
