@@ -13,7 +13,7 @@ app.use(express.json());
 
 // Defining Routes
 
-app.use("api/fetch-by-professor", searchProfessorController);
+app.use("/api/fetch-by-professor", searchProfessorController);
 app.use("/api/upload", uploadController);
 app.use("/api/fetch-by-subject", searchSubjectController);
 
