@@ -18,9 +18,7 @@ async function uploadData(dataParams) {
         url.trim(),
         subjectId,
         professorId
-    ];
-
-    console.log(uploadArr)
+    ];    
 
     await db.query(`INSERT INTO exams 
     (semester, category_id, url, subject_id, professor_id)
