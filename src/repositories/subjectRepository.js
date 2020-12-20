@@ -1,22 +1,9 @@
 const db = require("../database/index");
 
-async function fetchStoredParams() {
-    const respSubjects = await db.query('SELECT * FROM subjects');
-    const subjects = respSubjects.rows;
 
-    const respCategory = await db.query('SELECT * FROM category');
-    const category = respCategory.rows;
-
-    const respProfessors = await db.query('SELECT * FROM professors');
-    const professors = respProfessors.rows;
-
-    const respProfClass = await db.query('SELECT * FROM prof_class');
-    const profClass = respProfClass.rows;
-
-    return {subjects, category, professors, profClass}
-}
-
+//SEARCH BY SUBJECTS
 async function fetchTerms() {
+    
     const resp = await db.query(`
         SELECT terms.name AS term_name,
         terms.id AS term_id, COUNT(subjects.name)
@@ -31,6 +18,7 @@ async function fetchTerms() {
 }
 
 async function fetchSubjetcsPerTerm(id) {    
+    
     const resp = await db.query(`
         SELECT subjects.id AS subject_id,
         subjects.name AS subject_name,
@@ -47,8 +35,9 @@ async function fetchSubjetcsPerTerm(id) {
 }
 
 async function fetchExamsPerCategory(id) {
+    
     const resp = await db.query(`
-        SELECT category.category AS category_name,
+        SELECT category.category AS category,
         category.id AS category_id, subjects.id AS subject_id,
         COUNT(exams.subject_id) FROM category
         INNER JOIN exams ON category.id=exams.category_id
@@ -78,4 +67,10 @@ async function fetchExams(categoryId, subjectId) {
     return exams;
 }
 
-module.exports = { fetchStoredParams, fetchTerms, fetchSubjetcsPerTerm, fetchExamsPerCategory, fetchExams };
+
+module.exports = { 
+    fetchTerms,
+    fetchSubjetcsPerTerm, 
+    fetchExamsPerCategory, 
+    fetchExams    
+ };
